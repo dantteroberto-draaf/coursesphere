@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_09_173641) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_09_231800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "courses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.date "end_date"
+    t.string "name"
+    t.date "start_date"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_courses_on_user_id"
+  end
+
+  create_table "lessons", force: :cascade do |t|
+    t.bigint "course_id", null: false
+    t.datetime "created_at", null: false
+    t.string "status"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.string "video_url"
+    t.index ["course_id"], name: "index_lessons_on_course_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -21,4 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_09_173641) do
     t.string "password_digest"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "courses", "users"
+  add_foreign_key "lessons", "courses"
 end
