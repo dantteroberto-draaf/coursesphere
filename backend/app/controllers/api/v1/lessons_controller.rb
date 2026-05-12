@@ -12,10 +12,10 @@ class Api::V1::LessonsController < ApplicationController
   def create
     lesson = @course.lessons.build(lesson_params)
 
-    if course.save
-      render json: course, status: :created
+    if lesson.save
+      render json: lesson, status: :created
     else
-      render json: { errors: course.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: lesson.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

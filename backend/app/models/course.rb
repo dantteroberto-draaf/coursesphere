@@ -11,8 +11,9 @@ class Course < ApplicationRecord
   private
 
   def end_date_must_be_after_start_date
-    if start_date.present && end_date.present && end_date < start_date
-      errors.add(:end_date, "deve ser igual ou posterior à data de início")
-    end
+    return if end_date.blank? || start_date.blank?
+  if end_date < start_date
+    errors.add(:end_date, "deve ser igual ou posterior à data de início")
   end
+end
 end
